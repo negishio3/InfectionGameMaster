@@ -17,10 +17,10 @@ public class MultipleTargetCamera : MonoBehaviour
 
     private void Update()
     {
-        if (targets[0] != null)
-        {
-            for (int i = 0; i < targets.Count; i++) { RayTest(targets[i].transform.position); }
-        }
+        //if (targets[0] != null)
+        //{
+        //    for (int i = 0; i < targets.Count; i++) { RayTest(targets[i].transform.position); }
+        //}
         //targets = GameObject.FindGameObjectsWithTag("Target").ToList();
         transform.position = Vector3.Lerp(transform.position, calcCameraPosition(), 1.0f);
     }
@@ -56,30 +56,30 @@ public class MultipleTargetCamera : MonoBehaviour
         return centerPointWorld - transform.forward * (cameraLength + offset);
     }
     //rayに触れたオブジェクトのメッシュを消す
-    void RayTest(Vector3 targetPos)
-    {
-        Vector3 targetCenter=new Vector3(
-            targetPos.x-transform.position.x,
-            targetPos.y-transform.position.y+3.0f,
-            targetPos.z-transform.position.z
-            );
-        Ray ray = new Ray(transform.position,targetCenter);
+    //void RayTest(Vector3 targetPos)
+    //{
+    //    Vector3 targetCenter=new Vector3(
+    //        targetPos.x-transform.position.x,
+    //        targetPos.y-transform.position.y+3.0f,
+    //        targetPos.z-transform.position.z
+    //        );
+    //    Ray ray = new Ray(transform.position,targetCenter);
         
 
-        RaycastHit hit;
+    //    RaycastHit hit;
 
-        float distance = Mathf.Sqrt(
-        ((transform.position.x - targetPos.x)* (transform.position.x - targetPos.x))
-        + ((transform.position.y - targetPos.y) * (transform.position.y - targetPos.y))
-        + ((transform.position.z - targetPos.z) * (transform.position.z - targetPos.z)));
+    //    float distance = Mathf.Sqrt(
+    //    ((transform.position.x - targetPos.x)* (transform.position.x - targetPos.x))
+    //    + ((transform.position.y - targetPos.y) * (transform.position.y - targetPos.y))
+    //    + ((transform.position.z - targetPos.z) * (transform.position.z - targetPos.z)));
 
-        Debug.DrawRay(ray.origin, ray.direction * distance, Color.red);
+    //    Debug.DrawRay(ray.origin, ray.direction * distance, Color.red);
 
-        if (Physics.Raycast(ray, out hit, distance))
-        {
-            if (hit.collider.tag == "Objects"){
-                hit.collider.gameObject.GetComponent<MeshRenderer>().enabled = !Physics.Raycast(ray, out hit, distance);
-            }
-        }
-    }
+    //    if (Physics.Raycast(ray, out hit, distance))
+    //    {
+    //        if (hit.collider.tag == "Objects"){
+    //            hit.collider.gameObject.GetComponent<MeshRenderer>().enabled = !Physics.Raycast(ray, out hit, distance);
+    //        }
+    //    }
+    //}
 }
