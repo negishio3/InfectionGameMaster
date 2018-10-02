@@ -16,7 +16,7 @@ public class AIPlayer : AIBase
         AREA
     }
     [SerializeField]
-    protected MoveState moveState=MoveState.MOVE;
+    public MoveState moveState=MoveState.MOVE;
 
     public GameObject createpos;
     [SerializeField]
@@ -24,6 +24,8 @@ public class AIPlayer : AIBase
     [SerializeField]
     private gero geroScr;
 
+    public bool SpdUpFlg { get; set; }
+    public IEnumerator spdUpCor;
     protected bool atkFlg=true;         //攻撃中か否か
     protected float randomPosRange=30;  //移動場所ランダム範囲
     protected GameObject atackedTarget; //直近の攻撃済みのtarget
@@ -57,6 +59,8 @@ public class AIPlayer : AIBase
         targetTag = "Mob";
         navMeshAgent.speed=defaltSpeed;
         areaGuideLine = GetComponentInChildren<AreaGuideLine>();
+        spdUpCor = SpeedUpCoroutine();
+        SpdUpFlg = false;
     }
 
     protected override void Update()
@@ -302,6 +306,10 @@ public class AIPlayer : AIBase
     }
     IEnumerator AtkCor()
     {
+        if (atkFlg == false)
+        {
+            yield break;
+        }
         atkFlg = false;
         yield return new WaitForSeconds(0.6f);
         geroScr.ThrowingBall();
@@ -314,10 +322,13 @@ public class AIPlayer : AIBase
         StartCoroutine(SpeedUpCoroutine());
     }
 
-    IEnumerator SpeedUpCoroutine()
+    public IEnumerator SpeedUpCoroutine()
     {
+        yield return null;
+        SpdUpFlg = true;
         navMeshAgent.speed = defaltSpeed * 2;
         yield return new WaitForSeconds(10f);
+        SpdUpFlg = false;
         navMeshAgent.speed = defaltSpeed;
     }
 }

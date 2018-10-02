@@ -10,14 +10,30 @@ public class ItemOfAccel : ItemBase {
         if (EntrySystem.entryFlg[i-1])
         {
             PlayerMove PM= obj.GetComponent<PlayerMove>();
-            PM.StopAllCoroutines();
-            PM.SpeedUp();
+            if (PM.SpdUpFlg)
+            {
+                StopCoroutine(PM.spdUpCor);
+                PM.spdUpCor = PM.SpeedUpCoroutine();
+            }
+            else
+            {
+                PM.SpeedUp();
+            }
+            
         }
         else
         {
             AIPlayer AI = obj.GetComponent<AIPlayer>();
-            AI.StopAllCoroutines();
-            AI.SpeedUp();
+            if (AI.SpdUpFlg)
+            {
+                StopCoroutine(AI.spdUpCor);
+                AI.spdUpCor = AI.SpeedUpCoroutine();
+            }
+            else
+            {
+                AI.SpeedUp();
+            }
+            
         }
         Destroy(gameObject);
     }

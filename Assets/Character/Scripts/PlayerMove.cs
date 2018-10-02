@@ -12,6 +12,7 @@ public class PlayerMove : PlayerNumber
     [SerializeField]
     private gero geroScri;
 
+    public IEnumerator spdUpCor;
 
     private CharacterController cCon;
     private Animator anim;
@@ -23,6 +24,7 @@ public class PlayerMove : PlayerNumber
     private Vector3 vecInput;
     private bool atkFlg = true;
     private bool inArea=false;
+    public bool SpdUpFlg { get; set; }
 
     private float defaltSpeed;
     private float atktime=0;
@@ -41,6 +43,7 @@ public class PlayerMove : PlayerNumber
         stateInfo = anim.GetCurrentAnimatorStateInfo(0);
         defaltSpeed = movespeed;
         areaGuideLine = GetComponentInChildren<AreaGuideLine>();
+        spdUpCor = SpeedUpCoroutine();
     }
 
     // Update is called once per frame
@@ -126,11 +129,12 @@ public class PlayerMove : PlayerNumber
     {
         StartCoroutine(SpeedUpCoroutine());
     }
-
-    IEnumerator SpeedUpCoroutine()
+    public IEnumerator SpeedUpCoroutine()
     {
+        SpdUpFlg = true;
         movespeed = defaltSpeed * 2;
         yield return new WaitForSeconds(10f);
+        SpdUpFlg = false;
         movespeed = defaltSpeed;
     }
 }

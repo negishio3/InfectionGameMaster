@@ -14,6 +14,16 @@ public class PurificationTrap : ItemBase {
     {
         if (anim.GetBool("Trigger") == false)
         {
+            gameObject.tag = "Untagged";
+            int i = obj.GetComponent<PlayerNumber>().PlayerNum;
+            if (EntrySystem.entryFlg[i - 1])
+            {
+
+            }
+            else
+            {
+                obj.GetComponent<AIPlayer>().moveState = AIPlayer.MoveState.MOVE;
+            }
             anim.SetBool("Trigger", true);
             StartCoroutine(Instant());
             Destroy(gameObject, 2f);
